@@ -8,7 +8,4 @@ import java.util.List;
 
 public interface OccasionRepository extends JpaRepository<Occasion, Long> {
 
-    Occasion findFirstByParticipants(Participant participant);
-
-    List<Occasion> findAllByParticipants(Participant participant);
 }

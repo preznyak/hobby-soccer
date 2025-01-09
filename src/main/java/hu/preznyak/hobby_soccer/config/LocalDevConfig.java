@@ -1,12 +1,14 @@
 package hu.preznyak.hobby_soccer.config;
 
-import java.io.File;
 import lombok.SneakyThrows;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ClassPathResource;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.templateresolver.FileTemplateResolver;
+
+import java.io.File;
+import java.util.Objects;
 
 
 /**
@@ -21,7 +23,7 @@ public class LocalDevConfig {
         final ClassPathResource applicationProperties = new ClassPathResource("application.properties");
         if (applicationProperties.isFile()) {
             File sourceRoot = applicationProperties.getFile().getParentFile();
-            while (sourceRoot.listFiles((dir, name) -> name.equals("mvnw")).length != 1) {
+            while (Objects.requireNonNull(sourceRoot.listFiles((dir, name) -> name.equals("mvnw"))).length != 1) {
                 sourceRoot = sourceRoot.getParentFile();
             }
             final FileTemplateResolver fileTemplateResolver = new FileTemplateResolver();
