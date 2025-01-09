@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+    <head>
+        <title>[[#{occasion.list.headline}]]</title>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="d-flex flex-wrap mb-4">
+                <h1 class="flex-grow-1">[[#{occasion.list.headline}]]</h1>
+                <div>
+                    <a th:href="@{/occasions/add}" class="btn btn-primary ms-2">[[#{occasion.list.createNew}]]</a>
+                </div>
+            </div>
+            <div th:if="${occasions.empty}">[[#{occasion.list.empty}]]</div>
+            <div th:if="${!occasions.empty}" class="table-responsive">
+                <table class="table table-striped table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th scope="col">[[#{occasion.id.label}]]</th>
+                            <th scope="col">[[#{occasion.title.label}]]</th>
+                            <th scope="col">[[#{occasion.start.label}]]</th>
+                            <th scope="col">[[#{occasion.end.label}]]</th>
+                            <th><!-- --></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="occasion : ${occasions}">
+                            <td>[[${occasion.id}]]</td>
+                            <td>[[${occasion.title}]]</td>
+                            <td>[[${occasion.start}]]</td>
+                            <td>[[${occasion.end}]]</td>
+                            <td>
+                                <div class="float-end text-nowrap">
+                                    <a th:href="@{/occasions/edit/{id}(id=${occasion.id})}" class="btn btn-sm btn-secondary">[[#{occasion.list.edit}]]</a>
+                                    <form th:action="@{/occasions/delete/{id}(id=${occasion.id})}"
+                                            th:data-confirm-message="#{delete.confirm}" method="post" class="js-submit-confirm d-inline">
+                                        <button type="submit" class="btn btn-sm btn-secondary">[[#{occasion.list.delete}]]</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
