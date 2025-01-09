@@ -1,24 +1,14 @@
 package hu.preznyak.hobby_soccer.participant;
 
 import hu.preznyak.hobby_soccer.occasion.Occasion;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
-import java.time.OffsetDateTime;
-import java.util.Set;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.OffsetDateTime;
+import java.util.Set;
 
 
 @Entity
@@ -26,6 +16,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Participant {
 
     @Id
@@ -48,12 +41,7 @@ public class Participant {
     @Column
     private Integer age;
 
-    @ManyToMany
-    @JoinTable(
-            name = "Participations",
-            joinColumns = @JoinColumn(name = "participantId"),
-            inverseJoinColumns = @JoinColumn(name = "occasionId")
-    )
+    @ManyToMany(mappedBy = "participants")
     private Set<Occasion> occasions;
 
     @CreatedDate

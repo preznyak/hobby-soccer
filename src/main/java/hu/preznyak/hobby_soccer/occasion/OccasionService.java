@@ -1,11 +1,14 @@
 package hu.preznyak.hobby_soccer.occasion;
 
+import hu.preznyak.hobby_soccer.participant.Participant;
 import hu.preznyak.hobby_soccer.participant.ParticipantRepository;
 import hu.preznyak.hobby_soccer.util.NotFoundException;
 import jakarta.transaction.Transactional;
-import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -61,13 +64,17 @@ public class OccasionService {
         occasionDTO.setTitle(occasion.getTitle());
         occasionDTO.setStart(occasion.getStart());
         occasionDTO.setEnd(occasion.getEnd());
+        occasionDTO.setParticipants(occasion.getParticipants().stream()
+                .map(Participant::getName)
+                .collect(Collectors.toList()));
         return occasionDTO;
     }
-
+    //TODO introduce mapstruct
     private Occasion mapToEntity(final OccasionDTO occasionDTO, final Occasion occasion) {
         occasion.setTitle(occasionDTO.getTitle());
         occasion.setStart(occasionDTO.getStart());
         occasion.setEnd(occasionDTO.getEnd());
+        // TODO set participants in a mapstruct decorator
         return occasion;
     }
 

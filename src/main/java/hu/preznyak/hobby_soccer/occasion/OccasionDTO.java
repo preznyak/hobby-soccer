@@ -2,9 +2,11 @@ package hu.preznyak.hobby_soccer.occasion;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Getter
@@ -21,5 +23,7 @@ public class OccasionDTO {
 
     @NotNull
     private LocalDateTime end;
+
+    private List<String> participants;
 
 }

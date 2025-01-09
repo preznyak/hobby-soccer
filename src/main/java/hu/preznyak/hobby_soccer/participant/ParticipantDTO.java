@@ -2,7 +2,6 @@ package hu.preznyak.hobby_soccer.participant;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,6 +18,6 @@ public class ParticipantDTO {
 
     private Integer age;
 
-    private List<Long> occasions;
+//    private List<Long> occasions;
 
 }
