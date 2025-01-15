@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -60,5 +61,13 @@ public class Occasion {
     @LastModifiedDate
     @Column(nullable = false)
     private OffsetDateTime lastUpdated;
+
+    public void addParticipant(Participant participant) {
+        if (participants == null) {
+            participants = new HashSet<>();
+        } else {
+            participants.add(participant);
+        }
+    }
 
 }

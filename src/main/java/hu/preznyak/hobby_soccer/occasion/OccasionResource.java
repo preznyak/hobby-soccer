@@ -1,5 +1,6 @@
 package hu.preznyak.hobby_soccer.occasion;
 
+import hu.preznyak.hobby_soccer.participant.ParticipantDTO;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -39,7 +40,7 @@ public class OccasionResource {
 
     @PutMapping("/{id}")
     public ResponseEntity<Long> updateOccasion(@PathVariable(name = "id") final Long id,
-            @RequestBody @Valid final OccasionDTO occasionDTO) {
+                                               @RequestBody @Valid final OccasionDTO occasionDTO) {
         occasionService.update(id, occasionDTO);
         return ResponseEntity.ok(id);
     }
@@ -49,6 +50,15 @@ public class OccasionResource {
     public ResponseEntity<Void> deleteOccasion(@PathVariable(name = "id") final Long id) {
         occasionService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/v1/addParticipant/{id}")
+    @ApiResponse(responseCode = "202")
+    public ResponseEntity<Void> addParticipant(@PathVariable Long id,
+                                               @RequestBody @Valid final ParticipantDTO participantDTO) {
+        occasionService.addParticipant(id, participantDTO);
+        return ResponseEntity.accepted().build();
+
     }
 
 }

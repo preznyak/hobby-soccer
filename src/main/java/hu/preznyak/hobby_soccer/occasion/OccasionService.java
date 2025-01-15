@@ -1,9 +1,9 @@
 package hu.preznyak.hobby_soccer.occasion;
 
-import hu.preznyak.hobby_soccer.participant.Participant;
-import hu.preznyak.hobby_soccer.participant.ParticipantRepository;
+import hu.preznyak.hobby_soccer.participant.*;
 import hu.preznyak.hobby_soccer.util.NotFoundException;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +17,13 @@ public class OccasionService {
 
     private final OccasionRepository occasionRepository;
     private final ParticipantRepository participantRepository;
+    private final ParticipantMapper participantMapper;
 
     public OccasionService(final OccasionRepository occasionRepository,
-            final ParticipantRepository participantRepository) {
+                           final ParticipantRepository participantRepository, ParticipantMapper participantMapper) {
         this.occasionRepository = occasionRepository;
         this.participantRepository = participantRepository;
+        this.participantMapper = participantMapper;
     }
 
     public List<OccasionDTO> findAll() {
@@ -78,4 +80,12 @@ public class OccasionService {
         return occasion;
     }
 
+    public void addParticipant(Long id, @Valid ParticipantDTO participantDTO) {
+        final Occasion occasion = occasionRepository.findById(id)
+                .orElseThrow(NotFoundException::new);
+        var participant = participantMapper.toEntity(participantDTO);
+        occasion.addParticipant(participant);
+        occasionRepository.save(occasion);
+
+    }
 }
